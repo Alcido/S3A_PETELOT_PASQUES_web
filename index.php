@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use src\classes\dispatch\Dispatcher;
+
 require_once 'vendor/autoload.php';
 
 session_start();

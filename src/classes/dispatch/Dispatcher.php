@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace src\classes\dispatch;
+use src\classes\action\PlaylistUserAction;
+
 class Dispatcher {
 
     private ?string $action;
