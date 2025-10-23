@@ -9,6 +9,7 @@ use src\classes\action\LoginAction;
 use src\classes\action\PlaylistUserAction;
 use src\classes\action\RegisterAction;
 use src\classes\action\ShowCurrPlaylistAction;
+use src\classes\repository\QuoicouRepository;
 
 class Dispatcher {
 
@@ -20,7 +21,7 @@ class Dispatcher {
         } else {
             $this->action = $action;
         }
-        DeefyRepository::setConfig("config/config.db.ini");
+        QuoicouRepository::setConfig("config/config.db.ini");
     }
 
     public function run() : void {
