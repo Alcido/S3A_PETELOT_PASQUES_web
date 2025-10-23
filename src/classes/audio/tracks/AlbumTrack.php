@@ -11,9 +11,9 @@ class AlbumTrack extends AudioTrack {
     private string $nomAlbum;
     private int $numPiste;
 
-    public function __construct(string $t, string $fichier, string $nAlb, int $piste, ?string $artiste=null, ?string $annee=null, ?string $genre=null, ?int $duree=null)
+    public function __construct(string $t, string $fichier, string $nAlb, int $piste, ?string $artiste=null, ?string $annee=null, ?string $genre=null, ?int $duree=null, ?int $id=null)
     {
-        parent::__construct($t, $fichier, $artiste, $annee, $genre, $duree);
+        parent::__construct($t, $fichier, $artiste, $annee, $genre, $duree, $id);
         $this->nomAlbum = $nAlb;
         $this->numPiste = $piste;
     }

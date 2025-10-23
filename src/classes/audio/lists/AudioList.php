@@ -17,7 +17,7 @@ class AudioList
         $this->name = $nom;
         $this->pistes = $pistes;
         $this->nbPiste = count($pistes);
-        $this->dureeTot = $dureeTot;
+        $this->dureeTot =0;
         if ($this->nbPiste > 0) {
             for ($i = 0; $i < $this->nbPiste; ++$i) {
                 $this->dureeTot += $this->pistes[$i]->duree;
