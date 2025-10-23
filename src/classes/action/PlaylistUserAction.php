@@ -12,7 +12,13 @@ class PlaylistUserAction extends Action {
         $playlists = QuoicouRepository::getInstance()->getPlaylistByUser($_SESSION['user']->id);
         foreach ($playlists as $playlist) {
             $renderer = new PlaylistRenderer($playlist);
-            $html .= "<li>" . $renderer->render(2) . "</li><br>";
+            $affichage = $renderer->render(2);
+            $html .= "
+                    <li>
+                    <a href='?action=select-playlist&id={$playlist->id}' class='playlist-link'>
+                        $affichage
+                    </a>
+                    </li><br>";;
         }
         $html .= "</ul>";
         return $html;

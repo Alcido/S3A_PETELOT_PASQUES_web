@@ -12,11 +12,11 @@ class LoginAction extends Action {
         $html = <<<HTML
                 <form method="POST" action="?action=login">
                 <fieldset>
-                    <legends>Connexion</legends>
+                    <legends>Connexion</legends><br>
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email-user" autofocus required >
+                    <input type="text" id="email" name="email-user" autofocus required ><br>
                     <label for="mdp">Mot de passe</label>
-                    <input type="password" id="mdp" name="mdp-user" required >
+                    <input type="password" id="mdp" name="mdp-user" required ><br>
                     <button type="submit">Connexion</button>
                 </fieldset>
                 </form>
@@ -30,7 +30,7 @@ class LoginAction extends Action {
 
         try {
             AuthnProvider::signin($mail, $mdp);
-            $html = "Connexion réussie, bienvenue !</p>";
+            header('Location: ?action=default');
         } catch (AuthnException $e) {
             $html = "<script>alert('Erreur : identifiants incorrects ! Merci de créer un compte ou de vérifier les informations de connexion');</script>" . $this->lancerGet();
         }

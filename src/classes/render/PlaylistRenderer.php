@@ -12,7 +12,7 @@ class PlaylistRenderer extends AudioListRenderer {
     public function renderLong() : string {
         $dossier = "src/classes/file_tracks/";
         $affichage ="
-        <div class='playlist''>
+        <div class='playlist'>
         <p>Nom : {$this->audioList->name}</p>
         <p>Nombre de pistes : {$this->audioList->nbPiste}</p>
         <p>Durée totale : {$this->audioList->dureeTot}</p>

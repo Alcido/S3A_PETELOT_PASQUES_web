@@ -5,6 +5,7 @@ namespace src\classes\dispatch;
 use src\classes\action\AddPlaylistAction;
 use src\classes\action\AddTrackAction;
 use src\classes\action\DefaultAction;
+use src\classes\action\DisconnectAction;
 use src\classes\action\LoginAction;
 use src\classes\action\PlaylistUserAction;
 use src\classes\action\RegisterAction;
@@ -44,6 +45,9 @@ class Dispatcher {
             case 'register':
                 $actionExec = new RegisterAction;
                 break;
+            case 'disconnect':
+                $actionExec = new DisconnectAction;
+                break;
             case 'default':
             default:
                 $actionExec = new DefaultAction;
@@ -59,7 +63,7 @@ class Dispatcher {
                 <head>
                 <meta charset="UTF-8">
                 <title>Mon Deefy</title>
-                <link rel="stylesheet" href="src/classes/dispatch/styleSpotify.css">
+                <link rel="stylesheet" href="css/styleSpotify.css">
                 </head>
                 <body>
                 HTML;
@@ -71,11 +75,15 @@ class Dispatcher {
                        <nav>
                         <ul>
                           <li><a href="?action=default"><span>Accueil</span></a></li>
-                          <li><a href="?action=playlist"><span>Afficher les Playlists</span></a></li>
-                          <li><a href="?action=add-playlist"><span>Créer une Playlist</span></a></li>
-                          <li><a href="?action=add-track"><span>Ajouter une track</span></a></li>
-                          <li><a href="?action=add-user"><span>Ajouter un utilisateur</span></a></li>
+                          <li><a href="?action=pl-user"><span>Afficher vos Playlists</span></a></li>
+                          <li><a href="?action=add-track"><span>Ajouter une track à la playlist courante</span></a></li>
+                          <li><a href="?action=add-playlist"><span>Créer une nouvelle playlist</span></a></li>
+                          <li><a href="?action=pl-current"><span>Afficher la playlist courante</span></a></li>
+                          <li><a href="?action=register"><span>Ajouter un utilisateur</span></a></li>
                         </ul>
+                        <form action="?action=disconnect" method="post">
+                          <button type="submit">Déconnexion</button>
+                        </form>
                       </nav>
                     </div>
                 HTML;

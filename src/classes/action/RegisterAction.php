@@ -14,11 +14,11 @@ class RegisterAction extends Action
                     <fieldset>
                         <legend>Inscription</legend>
                         <label for="mail">Email</label>
-                        <input type="email" id="mail" placeholder="exemple@test.fr" name="mail-user" autofocus required>
+                        <input type="email" id="mail" placeholder="exemple@test.fr" name="mail-user" autofocus required><br>
                         <label for="passwd">Mot de passe</label>
-                        <input type="password" id="passwd" name="passwd-user" required minlength="10">
+                        <input type="password" id="passwd" name="passwd-user" required minlength="10"><br>
                         <label for="passwd2">Confirmer le mot de passe</label>
-                        <input type="password" id="passwd2" name="passwd-user2" required minlength="10">
+                        <input type="password" id="passwd2" name="passwd-user2" required minlength="10"><br>
                 
                         <button type="submit">Valider</button>
                     </fieldset>
@@ -44,13 +44,12 @@ class RegisterAction extends Action
                 return $this->lancerGet() . "<script>alert('Erreur : identifiant déjà présent !');</script>";
             }
 
-            $html = <<<HTML
-                    <div class="user-info">
-                       <p><b>Bonjour {$_SESSION["user"]->email}</p>
-                    </div>
-                    HTML;
+            if (!isset($_SESSION["user"])) {
+                header("Location : ?action=login");
+            } else {
+                $html = "<p>Utilisateur ajouté avec succès</p>";
+            }
 
-            //modifier pour aller sur la page de connexion
         }
         return $html;
     }

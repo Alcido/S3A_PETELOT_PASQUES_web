@@ -1,0 +1,222 @@
+/* ---------- RESET ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f2f2f2; /* fond gris clair */
+    color: #222;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---------- NAVIGATION ---------- */
+#choices {
+    width: 250px;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#choices h1 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: #1db954;
+}
+
+#choices nav ul {
+    list-style: none;
+    width: 100%;
+}
+
+#choices nav li {
+    margin-bottom: 10px;
+}
+
+#choices nav a {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+#choices nav a:hover {
+    background-color: #1db954;
+    color: #000;
+}
+
+/* ---------- CONTENU PRINCIPAL ---------- */
+main {
+    flex-grow: 1;
+    padding: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+main h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* ---------- CONTENEUR DU CONTENU ---------- */
+#content {
+    flex-grow: 1;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+/* ---------- FORMULAIRES ---------- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+legend,
+legends {
+    font-weight: bold;
+    color: #1db954;
+    margin-bottom: 10px;
+}
+
+label {
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+input,
+select,
+button,
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #1db954;
+    box-shadow: 0 0 4px rgba(29, 185, 84, 0.4);
+}
+
+button {
+    background-color: #1db954;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #17a84b;
+}
+
+/* ---------- PLAYLISTS ET PISTES ---------- */
+.playlist {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* ombre plus marquée */
+    border: 2px solid #e0e0e0; /* démarcation claire */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.playlist:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.playlist p {
+    margin-bottom: 5px;
+}
+
+/* Supprimer les puces de toutes les listes dans les playlists */
+.playlist ul,
+.playlist li,
+.pistes ul,
+.pistes li {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.pistes {
+    background-color: #f9f9f9;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+.pistes li {
+    margin: 3px 0;
+}
+
+audio {
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* ---------- FORMULAIRES MULTIPLES (form1, form2) ---------- */
+.formulaire {
+    margin-top: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+button[onclick] {
+    margin-right: 10px;
+}
+
+/* ---------- SCROLL PERSONNALISÉ ---------- */
+#content::-webkit-scrollbar {
+    width: 10px;
+}
+#content::-webkit-scrollbar-thumb {
+    background-color: #1db954;
+    border-radius: 10px;
+}
+#content::-webkit-scrollbar-track {
+    background-color: #f2f2f2;
+}
+
+.playlist-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.playlist-link:hover .playlist {
+    border-color: #1db954;
+    box-shadow: 0 6px 16px rgba(29, 185, 84, 0.3);
+    transform: scale(1.01);
+}
+

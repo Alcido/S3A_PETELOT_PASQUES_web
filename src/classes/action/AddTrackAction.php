@@ -12,6 +12,9 @@ class AddTrackAction extends Action {
 
     public function lancerGet() : string{
         if (!isset($_SESSION['playlist'])) return "<p>Aucune playlist en session</p>";
+        $user = $_SESSION['user'];
+        $pl = $_SESSION['playlist'];
+        if (!QuoicouRepository::getInstance()->isPlaylistOfUser($user->id, $pl->id)) return "<p>Vous n'êtes pas le propriétaire de la playlist</p>";
         $html =
             <<<HTML
                  <h2>Choisissez un formulaire :</h2>
@@ -28,7 +31,7 @@ class AddTrackAction extends Action {
                                 <label for="in2">Auteur de la Track</label>
                                 <input type="text" id="in2" name="track-author" placeholder="Auteur1"><br>
                                 <label for="in3">Date de la Track</label>
-                                <input type="number" id="in3" name="track-date" placeholder="Annee-mois-jour"><br>
+                                <input type="number" id="in3" name="track-date" placeholder="Annee"><br>
                                 <label for="in4">Genre de la Track</label>
                                 <input type="text" id="in4" name="track-genre" placeholder="Pop-Rock"><br>
                                 <label for="in5">Duree de la Track</label>
@@ -37,6 +40,7 @@ class AddTrackAction extends Action {
                                 <input type="file" id="in6" name="track-file" placeholder="track" required><br>
                                 <button type="submit" name="validerTrack">Sauvegarder la track</button>
                             </fieldset>
+                            </form>
                       </div>
                     
                       <div id="form2" class="formulaire">
@@ -49,7 +53,7 @@ class AddTrackAction extends Action {
                                 <label for="in2">Auteur de la Track</label>
                                 <input type="text" id="in2" name="track-author" placeholder="Auteur1"><br>
                                 <label for="in3">Date de la Track</label>
-                                <input type="number" id="in3" name="track-date" placeholder="Annee-mois-jour"><br>
+                                <input type="number" id="in3" name="track-date" placeholder="Annee"><br>
                                 <label for="in4">Genre de la Track</label>
                                 <input type="text" id="in4" name="track-genre" placeholder="Pop-Rock"><br>
                                 <label for="in5">Duree de la Track</label>
@@ -62,6 +66,7 @@ class AddTrackAction extends Action {
                                 <input type="file" id="in8" name="track-file" placeholder="track" required><br>
                                 <button type="submit" name="validerTrack">Sauvegarder la track</button>
                             </fieldset>
+                            </form>
                       </div>
                     
                       <script>
@@ -71,7 +76,7 @@ class AddTrackAction extends Action {
                           document.getElementById(id).style.display = 'block';
                         }
                       </script>
-                    </form>
+                    
                 HTML;
         return $html;
 
@@ -109,9 +114,10 @@ class AddTrackAction extends Action {
         }
 
         $newTrack = QuoicouRepository::getInstance()->saveAudioTrack($track);
-        QuoicouRepository::getInstance()->addTrackToPlaylist($_SESSION['playlist']->id,$newTrack->id);
+        $playlist = unserialize($_SESSION['playlist']);
+        QuoicouRepository::getInstance()->addTrackToPlaylist($playlist->id,$newTrack->id);
 
-        $playlist = QuoicouRepository::getInstance()->findPlaylistById($_SESSION['playlist']->id);
+        $playlist = QuoicouRepository::getInstance()->findPlaylistById($playlist->id);
         $_SESSION["playlist"] = serialize($playlist);
 
         $renderer = new PlaylistRenderer($playlist);

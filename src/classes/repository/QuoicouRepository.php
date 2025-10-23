@@ -165,6 +165,17 @@ class QuoicouRepository {
         return true;
     }
 
+    public function isPlaylistOfUser(int $id_user, int $id_pl) : bool {
+        $query = "Select id_user, id_pl from user2playlist where id_user = ? and id_pl = ?";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(array($id_user, $id_pl));
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row['id_user'] == $id_user && $row['id_pl'] == $id_pl) {
+            return true;
+        }
+        return false;
+    }
+
 
 
 
