@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace src\classes\lists;
+namespace src\classes\audio\lists;
 
-use TDAppli\deefy\exception\InvalidPropertyNameException;
+
+use src\classes\exception\InvalidPropertyNameException;
 
 class AudioList
 {

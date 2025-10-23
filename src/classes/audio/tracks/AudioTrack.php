@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace src\classes\tracks;
+namespace src\classes\audio\tracks;
 
-use TDAppli\deefy\exception\InvalidPropertyNameException;
-use TDAppli\deefy\exception\InvalidPropertyValueException;
+use src\classes\exception\InvalidPropertyNameException;
+use src\classes\exception\InvalidPropertyValueException;
+
+
 
 class AudioTrack
 {

@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace src\classes\tracks;
+namespace src\classes\audio\tracks;
 
-use TDAppli\deefy\exception\InvalidPropertyNameException;
 
 class AlbumTrack extends AudioTrack {
 

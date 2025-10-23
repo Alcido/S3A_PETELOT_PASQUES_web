@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace src\classes\tracks;
+use src\classes\audio\tracks\AudioTrack;
+
 class PodcastTrack extends AudioTrack
 {
     public function __construct(string $titre, string $nomFichier, ?string $auteur = null, ?string $annee = null, ?string $genre = null, ?int $duree = null, ?int $id = null)

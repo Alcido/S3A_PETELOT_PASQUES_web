@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace src\classes\auth;
 
-use TDAppli\deefy\exception\AuthnException;
-use TDAppli\deefy\repository\DeefyRepository;
-use TDAppli\deefy\user\User;
+use src\classes\exception\AuthnException;
+use src\classes\user\User;
 
 class AuthnProvider
 {
@@ -17,7 +16,7 @@ class AuthnProvider
             throw new AuthnException("L'utilisateur n'existe pas ou mot de passe incorrect");
         }
 
-        $_SESSION['user'] = new User($user['email'], $user['role']);
+        $_SESSION['user'] = new User($user['email'], $user['role'],$user['id']);
     }
 
     public static function register(string $mail, string $mdp) : void {

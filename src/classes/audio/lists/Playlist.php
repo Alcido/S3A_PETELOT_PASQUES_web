@@ -1,16 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace src\classes\lists;
+namespace src\classes\audio\lists;
 
-use TDAppli\deefy\audio\tracks\AudioTrack;
-use TDAppli\deefy\exception\InvalidPropertyNameException;
+
+use src\classes\audio\tracks\AudioTrack;
+use src\classes\exception\InvalidPropertyNameException;
 
 class Playlist extends AudioList
 {
 
     private ?int $id;
-    public function __construct($nom, $pistes, ?int $id=null, ) {
+    public function __construct($nom, $pistes, ?int $id=null) {
         parent::__construct($nom, $pistes);
         $this->id = $id;
     }

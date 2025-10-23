@@ -31,8 +31,6 @@ abstract class Action {
 
     abstract public function lancerGet() : string;
 
-    public function lancerPost() : string {
-        return "<br>Pas de POST pour le moment normalement<br>";
-    }
+    abstract public function lancerPost() : string;
 
 }
