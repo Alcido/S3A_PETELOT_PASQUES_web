@@ -4,6 +4,7 @@ namespace src\classes\action;
 
 use src\classes\audio\lists\Playlist;
 use src\classes\render\PlaylistRenderer;
+use src\classes\repository\QuoicouRepository;
 
 class ShowCurrPlaylistAction extends Action {
 
@@ -11,6 +12,10 @@ class ShowCurrPlaylistAction extends Action {
     {
         if (isset($_SESSION['playlist'])) {
             $playlist = unserialize($_SESSION['playlist']);
+            $user = unserialize($_SESSION['user']);
+
+            if (!QuoicouRepository::getInstance()->isPlaylistOfUser($user->id, $playlist->id)) return "<p>Vous n'êtes pas propriétaire de cette playlist</p>";
+
             $renderer = new PlaylistRenderer($playlist);
             $html = $renderer->render(2);
             $html .= "<br><a href=\"?action=add-track\">Ajouter une track dans la playlist</a>";
