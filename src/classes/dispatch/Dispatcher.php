@@ -9,6 +9,7 @@ use src\classes\action\DisconnectAction;
 use src\classes\action\LoginAction;
 use src\classes\action\PlaylistUserAction;
 use src\classes\action\RegisterAction;
+use src\classes\action\SelectPlaylistAction;
 use src\classes\action\ShowCurrPlaylistAction;
 use src\classes\repository\QuoicouRepository;
 
@@ -47,6 +48,9 @@ class Dispatcher {
                 break;
             case 'disconnect':
                 $actionExec = new DisconnectAction;
+                break;
+            case 'select-playlist':
+                $actionExec = new SelectPlaylistAction;
                 break;
             case 'default':
             default:

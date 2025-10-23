@@ -170,10 +170,7 @@ class QuoicouRepository {
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(array($id_user, $id_pl));
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if ($row['id_user'] == $id_user && $row['id_pl'] == $id_pl) {
-            return true;
-        }
-        return false;
+        return (bool)$row;
     }
 
 

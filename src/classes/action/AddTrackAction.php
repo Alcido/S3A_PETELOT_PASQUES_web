@@ -12,8 +12,8 @@ class AddTrackAction extends Action {
 
     public function lancerGet() : string{
         if (!isset($_SESSION['playlist'])) return "<p>Aucune playlist en session</p>";
-        $user = $_SESSION['user'];
-        $pl = $_SESSION['playlist'];
+        $user = unserialize($_SESSION['user']);
+        $pl = unserialize($_SESSION['playlist']);
         if (!QuoicouRepository::getInstance()->isPlaylistOfUser($user->id, $pl->id)) return "<p>Vous n'êtes pas le propriétaire de la playlist</p>";
         $html =
             <<<HTML

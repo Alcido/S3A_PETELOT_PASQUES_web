@@ -21,7 +21,8 @@ class AuthnProvider
             throw new AuthnException("Mot de passe incorrect");
         }
 
-        $_SESSION['user'] = new User($user['email'], $user['role'],$user['id']);
+        $value = new User($user['email'], $user['role'], $user['id']);
+        $_SESSION['user'] = serialize($value);
     }
 
     public static function register(string $mail, string $mdp) : void {

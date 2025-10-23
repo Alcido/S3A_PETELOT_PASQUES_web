@@ -10,7 +10,7 @@ session_start();
 if (!isset($_SESSION['user'])) {
     $action = "login";
 } else {
-    $action = $_GET['action'];
+    $action = $_GET['action'] ?? 'default';
 }
 
 $dispatcher = new Dispatcher($action);
