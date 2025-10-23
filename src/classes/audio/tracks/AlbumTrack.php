@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace src\classes\audio\tracks;
 
 
+use src\classes\exception\InvalidPropertyNameException;
+
 class AlbumTrack extends AudioTrack {
 
     private string $nomAlbum;
