@@ -2,7 +2,13 @@
 declare(strict_types=1);
 
 namespace src\classes\dispatch;
+use src\classes\action\AddPlaylistAction;
+use src\classes\action\AddTrackAction;
+use src\classes\action\DefaultAction;
+use src\classes\action\LoginAction;
 use src\classes\action\PlaylistUserAction;
+use src\classes\action\RegisterAction;
+use src\classes\action\ShowCurrPlaylistAction;
 
 class Dispatcher {
 

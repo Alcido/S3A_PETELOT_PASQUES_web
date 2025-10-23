@@ -11,9 +11,9 @@ use src\classes\tracks\PodcastTrack;
 class AddTrackAction extends Action {
 
     public function lancerGet() : string{
+        if (!isset($_SESSION['playlist'])) return "<p>Aucune playlist en session</p>";
         $html =
             <<<HTML
-                
                  <h2>Choisissez un formulaire :</h2>
                       <button onclick="afficherForm('form1')">Formulaire 1</button>
                       <button onclick="afficherForm('form2')">Formulaire 2</button>
@@ -67,14 +67,10 @@ class AddTrackAction extends Action {
                       <script>
                         document.querySelectorAll('.formulaire').forEach(el => el.style.display = 'none');
                         function afficherForm(id) {
-                          // cacher tous les formulaires
                           document.querySelectorAll('.formulaire').forEach(el => el.style.display = 'none');
-                          // afficher le formulaire sélectionné
                           document.getElementById(id).style.display = 'block';
                         }
                       </script>
-                  
-                      
                     </form>
                 HTML;
         return $html;
@@ -88,10 +84,8 @@ class AddTrackAction extends Action {
         $date = $_POST['track-date'];
         $genre = $_POST['track-genre'];
         $duree = intval($_POST['track-duree']);
-        $album = $_POST['nom-album'];
-        $numTrack = $_POST['numero-album'];
 
-        if (!$this->verifDonnee($name, $author, $date, $genre, $duree, $album, $numTrack)) {
+        if (!$this->verifDonnee($name, $author, $date, $genre, $duree)) {
             return $this->lancerGet() . "<script>alert(\"mauvais type de données\")</script>";
         }
 
@@ -103,7 +97,12 @@ class AddTrackAction extends Action {
             return "<b>Mauvais type de fichier</b><br>" . $this->lancerGet();
         }
 
-        if (isset($album)) {
+        if (isset($_POST['nom-album'])) {
+            $album = $_POST['nom-album'];
+            $numTrack = $_POST['numero-album'];
+            if (!$this->verifDonneeAlbumTrack($album, $numTrack)) {
+                return $this->lancerGet() . "<script>alert(\"mauvais type de données\")</script>";
+            }
             $track = new AlbumTrack($name, $namefile, $album, $numTrack, $author, $date, $genre, $duree);
         } else {
             $track = new PodcastTrack($name, $namefile,$author, $date, $genre, $duree);
@@ -122,15 +121,18 @@ class AddTrackAction extends Action {
 
     }
 
-    public function verifDonnee(string $name, string $author, mixed $date, string $genre, int $duree, string $album, int $numAlbum) : bool {
+    public function verifDonnee(string $name, string $author, mixed $date, string $genre, int $duree) : bool {
         return filter_var($name, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
             and filter_var($author, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
             and (filter_var($date, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])
                 or filter_var($date, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']]))
             and filter_var($genre, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
-            and filter_var($duree, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])
-            and filter_var($album,FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
-            and filter_var($numAlbum, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            and filter_var($duree, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    }
+
+    public function verifDonneeAlbumTrack( string $album, int $numAlbum) : bool {
+        return filter_var($album,FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
+        and filter_var($numAlbum, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
     }
 
 }
