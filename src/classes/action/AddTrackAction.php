@@ -9,14 +9,24 @@ use src\classes\render\PlaylistRenderer;
 use src\classes\repository\QuoicouRepository;
 use src\classes\audio\tracks\PodcastTrack;
 
+/**
+ * Action permettant d'ajouter une piste dans la playlist en session et dans la BDD
+ */
 class AddTrackAction extends Action {
 
+    /**
+     * Méthode de lancement du GET
+     * @return string formulaires de création de piste
+     */
     public function lancerGet() : string{
-
+        // On vérifie qu'une playlist est en session
         if (!isset($_SESSION['playlist'])) return "<p>Aucune playlist en session</p>";
+        // On récupère l'utilisateur et la playlist en session
         $user = unserialize($_SESSION['user']);
         $pl = unserialize($_SESSION['playlist']);
+        // On vérifie que l'utilisateur est propriétaire de la playlist
         if (!Authz::checkPlaylistOfUser($user->id, $pl->id)) return "<p>Vous n'êtes pas le propriétaire de la playlist</p>";
+        // Formulaires
         $html =
             <<<HTML
                  <h2>Choisissez un formulaire :</h2>
@@ -81,21 +91,26 @@ class AddTrackAction extends Action {
                     
                 HTML;
         return $html;
-
     }
 
+    /**
+     * Méthode de lancement du POST
+     * @return string résultat du POST en HTML
+     * @throws \src\classes\exception\InvalidPropertyValueException si les valeurs ne sont pas valides
+     */
     public function lancerPost() : string{
 
+        // On récupère et on vérifie les valeurs envoyées par le POST
         $name = $_POST['track-title'];
         $author = $_POST['track-author'];
         $date = $_POST['track-date'];
         $genre = $_POST['track-genre'];
         $duree = intval($_POST['track-duree']);
-
         if (!$this->verifDonnee($name, $author, $date, $genre, $duree)) {
             return $this->lancerGet() . "<script>alert(\"mauvais type de données\")</script>";
         }
 
+        // On vérifie le nom de fichier
         if (str_ends_with($_FILES['track-file']['name'], '.mp3') and $_FILES['track-file']['type'] === 'audio/mpeg') {
             $tmp = $_FILES['track-file']['tmp_name'];
             $namefile = $_FILES['track-file']['name'];
@@ -104,6 +119,7 @@ class AddTrackAction extends Action {
             return "<b>Mauvais type de fichier</b><br>" . $this->lancerGet();
         }
 
+        // On vérifie sur c'est une AlbumTrack ou une PodcastTrack
         if (isset($_POST['nom-album'])) {
             $album = $_POST['nom-album'];
             $numTrack = $_POST['numero-album'];
@@ -115,20 +131,31 @@ class AddTrackAction extends Action {
             $track = new PodcastTrack($name, $namefile,$author, $date, $genre, $duree);
         }
 
+        // On récupère la track enregistrée dans la BDD et la playlist en session
         $newTrack = QuoicouRepository::getInstance()->saveAudioTrack($track);
         $playlist = unserialize($_SESSION['playlist']);
+        // On ajoute la track à la playlist dans la BDD
         QuoicouRepository::getInstance()->addTrackToPlaylist($playlist->id,$newTrack->id);
-
+        // On ajoute la piste à la playlist en session
         $playlist->addPiste($newTrack);
+        // On actualise la playlist en session
         $_SESSION["playlist"] = serialize($playlist);
 
+        // Affichage
         $renderer = new PlaylistRenderer($playlist);
         $affichage = $renderer->render(2);
-
         return $affichage . "<a href=\"?action=add-track\">Ajouter encore une piste</a>";
 
     }
 
+    /** Méthode de vérification des données
+     * @param string $name nom de la piste
+     * @param string $author auteur de la piste
+     * @param mixed $date date de la piste
+     * @param string $genre genre de la piste
+     * @param int $duree duree de la piste
+     * @return bool si les données sont valides
+     */
     public function verifDonnee(string $name, string $author, mixed $date, string $genre, int $duree) : bool {
         return filter_var($name, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
             and filter_var($author, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
@@ -138,6 +165,11 @@ class AddTrackAction extends Action {
             and filter_var($duree, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
     }
 
+    /** Vérification des données propres aux AlbumTrack
+     * @param string $album nom de l'album
+     * @param int $numAlbum numéro dans l'album
+     * @return bool si les données sont valides ou pas
+     */
     public function verifDonneeAlbumTrack( string $album, int $numAlbum) : bool {
         return filter_var($album,FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
         and filter_var($numAlbum, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);

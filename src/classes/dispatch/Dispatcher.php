@@ -13,54 +13,71 @@ use src\classes\action\SelectPlaylistAction;
 use src\classes\action\ShowCurrPlaylistAction;
 use src\classes\repository\QuoicouRepository;
 
+/**
+ * Dispatcher permettant de gérer les différentes actions
+ */
 class Dispatcher {
 
     private ?string $action;
 
+    /** Constructeur du Dispatcher
+     * @param string|null $action type d'action
+     * @throws \Exception erreur
+     */
     public function __construct(?string $action) {
         if (!isset($action)) {
             $this->action = 'default';
         } else {
             $this->action = $action;
         }
-        QuoicouRepository::setConfig("config/config.db.ini");
     }
 
+    /** Méthode de lancement de l'action
+     * @return void
+     */
     public function run() : void {
         switch ($this->action) {
-            case 'pl-user':
+            case 'pl-user': // Affichage des playlists de l'utilisateur
                 $actionExec = new PlaylistUserAction;
                 break;
-            case 'add-track':
+            case 'add-track': // Ajout d'une piste
                 $actionExec = new AddTrackAction;
                 break;
-            case 'add-playlist':
+            case 'add-playlist': // Ajout d'une playlist
                 $actionExec = new AddPlaylistAction;
                 break;
-            case 'pl-current':
+            case 'pl-current': // Affichage de la playlist en session
                 $actionExec = new ShowCurrPlaylistAction;
                 break;
-            case 'login':
+            case 'login': // Connexion d'un utilisateur
                 $actionExec = new LoginAction;
                 break;
-            case 'register':
+            case 'register': // Inscription d'un utilisateur
                 $actionExec = new RegisterAction;
                 break;
-            case 'disconnect':
+            case 'disconnect': // Deconnexion d'un utilisateur
                 $actionExec = new DisconnectAction;
                 break;
-            case 'select-playlist':
+            case 'select-playlist': // Mise d'une playlist de la BDD en session
                 $actionExec = new SelectPlaylistAction;
                 break;
             case 'default':
-            default:
+            default: // Action par défaut
                 $actionExec = new DefaultAction;
                 break;
         }
+
+        // Affichage de la page avec le résultat de l'action
         $this->renderPage($actionExec());
     }
 
+    /** Méthode d'affichage de la page dans le navigateur
+     * @param string $html résultat de l'action
+     * @return void
+     */
     private function renderPage(string $html) : void {
+
+        // Page HTML
         $page = <<<HTML
                 <!DOCTYPE html>
                 <html lang="en">
@@ -71,7 +88,10 @@ class Dispatcher {
                 </head>
                 <body>
                 HTML;
+
+        // Si l'utilisateur est connecté
         if ($this->action !== 'login') {
+            // Affichage du menu
             $page .=
                 <<<HTML
                 <div id = "choices">
@@ -92,6 +112,8 @@ class Dispatcher {
                     </div>
                 HTML;
         }
+
+        // Ajout du résultat de l'action
         $page .=
             <<<HTML
             <main>
@@ -104,6 +126,7 @@ class Dispatcher {
             </html>
             HTML;
 
+        // On envoit la page
         echo $page;
     }
 

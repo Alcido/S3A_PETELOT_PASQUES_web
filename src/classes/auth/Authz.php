@@ -4,9 +4,17 @@ namespace src\classes\auth;
 
 use src\classes\repository\QuoicouRepository;
 
+/**
+ * Classe permettant de gérer les autorisations
+ */
 class Authz {
 
-    public static function checkPlaylistOfUser($userId, $playlistId) : bool{
+    /** Vérification de la propriété de la playlist
+     * @param int $userId id de l'utilisateur
+     * @param int $playlistId id de la playlist
+     * @return bool si l'utilisateur est propriétaire de la playlist
+     */
+    public static function checkPlaylistOfUser(int $userId, int $playlistId) : bool{
         return QuoicouRepository::getInstance()->isPlaylistOfUser($userId, $playlistId);
     }
 
