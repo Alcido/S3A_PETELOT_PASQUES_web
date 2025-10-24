@@ -2,12 +2,14 @@
 
 namespace src\classes\action;
 
+use src\classes\exception\AuthnException;
 use src\classes\render\PlaylistRenderer;
 use src\classes\repository\QuoicouRepository;
 
 class PlaylistUserAction extends Action {
 
     public function lancerGet() : string {
+
         $html = "<p>Vos playlists : </p><br><ul>";
         $user = unserialize($_SESSION['user']);
         $playlists = QuoicouRepository::getInstance()->getPlaylistByUser($user->id);
@@ -27,7 +29,7 @@ class PlaylistUserAction extends Action {
     }
 
     public function lancerPost() : string{
-        return "<p>Pas censé arriver ici</p>";
+        return $this->lancerGet();
     }
 
 }

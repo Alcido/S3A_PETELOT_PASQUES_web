@@ -3,23 +3,25 @@
 namespace src\classes\action;
 
 use src\classes\audio\tracks\AlbumTrack;
-use src\classes\audio\tracks\AudioTrack;
+use src\classes\auth\Authz;
+use src\classes\exception\AuthnException;
 use src\classes\render\PlaylistRenderer;
 use src\classes\repository\QuoicouRepository;
-use src\classes\tracks\PodcastTrack;
+use src\classes\audio\tracks\PodcastTrack;
 
 class AddTrackAction extends Action {
 
     public function lancerGet() : string{
+
         if (!isset($_SESSION['playlist'])) return "<p>Aucune playlist en session</p>";
         $user = unserialize($_SESSION['user']);
         $pl = unserialize($_SESSION['playlist']);
-        if (!QuoicouRepository::getInstance()->isPlaylistOfUser($user->id, $pl->id)) return "<p>Vous n'êtes pas le propriétaire de la playlist</p>";
+        if (!Authz::checkPlaylistOfUser($user->id, $pl->id)) return "<p>Vous n'êtes pas le propriétaire de la playlist</p>";
         $html =
             <<<HTML
                  <h2>Choisissez un formulaire :</h2>
-                      <button onclick="afficherForm('form1')">Formulaire 1</button>
-                      <button onclick="afficherForm('form2')">Formulaire 2</button>
+                      <button onclick="afficherForm('form1')">Ajouter une PodcastTrack</button>
+                      <button onclick="afficherForm('form2')">Ajouter une AlbumTrack</button>
                     
                       <div id="form1" class="formulaire">
                         <h3>Ajouter une PodcastTrack</h3>
@@ -117,7 +119,7 @@ class AddTrackAction extends Action {
         $playlist = unserialize($_SESSION['playlist']);
         QuoicouRepository::getInstance()->addTrackToPlaylist($playlist->id,$newTrack->id);
 
-        $playlist = QuoicouRepository::getInstance()->findPlaylistById($playlist->id);
+        $playlist->addPiste($newTrack);
         $_SESSION["playlist"] = serialize($playlist);
 
         $renderer = new PlaylistRenderer($playlist);

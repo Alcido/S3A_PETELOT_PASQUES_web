@@ -28,6 +28,8 @@ class LoginAction extends Action {
         $mail = $_POST['email-user'];
         $mdp = $_POST['mdp-user'];
 
+        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) throw new AuthnException("Adresse mail n'est pas valide");
+
         try {
             AuthnProvider::signin($mail, $mdp);
             header('Location: ?action=default');

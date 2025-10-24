@@ -5,12 +5,14 @@ namespace src\classes\action;
 
 
 use src\classes\audio\lists\Playlist;
+use src\classes\exception\AuthnException;
 use src\classes\render\PlaylistRenderer;
 use src\classes\repository\QuoicouRepository;
 
 class AddPlaylistAction extends Action {
 
     public function lancerGet() : string {
+
             $html = <<<HTML
                 <form method="post" action="?action=add-playlist">
                     <label for="nomPlaylist"> Nom de la Playlist </label>
@@ -30,7 +32,8 @@ class AddPlaylistAction extends Action {
         $pl = QuoicouRepository::getInstance()->saveEmptyPlaylist(new Playlist($name, []));
         $_SESSION['playlist'] = serialize($pl);
         $html = "<br><b>Playliste créée avec succès</b><br>";
-        $html .= QuoicouRepository::getInstance()->addUserToPlaylist($_SESSION['user']->id, $pl->id);
+        $user = unserialize($_SESSION['user']);
+        $html .= QuoicouRepository::getInstance()->addUserToPlaylist($user->id, $pl->id);
         $renderer = new PlaylistRenderer($pl);
         $affichage = $renderer->render(1);
         return $html . $affichage . "<br>" . "<a href=\"?action=add-track\">Ajouter une piste</a><br>";

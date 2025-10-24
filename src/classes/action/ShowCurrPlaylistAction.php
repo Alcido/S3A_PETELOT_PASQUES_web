@@ -3,6 +3,7 @@
 namespace src\classes\action;
 
 use src\classes\audio\lists\Playlist;
+use src\classes\auth\Authz;
 use src\classes\render\PlaylistRenderer;
 use src\classes\repository\QuoicouRepository;
 
@@ -14,7 +15,7 @@ class ShowCurrPlaylistAction extends Action {
             $playlist = unserialize($_SESSION['playlist']);
             $user = unserialize($_SESSION['user']);
 
-            if (!QuoicouRepository::getInstance()->isPlaylistOfUser($user->id, $playlist->id)) return "<p>Vous n'êtes pas propriétaire de cette playlist</p>";
+            if (!Authz::checkPlaylistOfUser($user->id, $playlist->id)) return "<p>Vous n'êtes pas le propriétaire de la playlist</p>";
 
             $renderer = new PlaylistRenderer($playlist);
             $html = $renderer->render(2);

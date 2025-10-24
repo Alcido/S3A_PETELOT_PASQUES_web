@@ -17,9 +17,9 @@ class AlbumTrackRenderer extends AudioTrackRenderer
     {
         $s = "
         <p>Piste : {$this->audioTrack->titre}</p></br>
-        <p>Album : {$this->audioTrack->album}</p></br>
-        <p>Numéro de piste : {$this->audioTrack->numero}</p></br>
-        <audio controls><source src=\"{$this->audioTrack->fichier}\" type=\"audio/mpeg\"></audio>";
+        <p>Album : {$this->audioTrack->nomAlbum}</p></br>
+        <p>Numéro de piste : {$this->audioTrack->numPiste}</p></br>
+        <audio controls><source src=\"files/{$this->audioTrack->nomFichier}\" type=\"audio/mpeg\"></audio>";
         return $s;
     }
 
@@ -27,13 +27,13 @@ class AlbumTrackRenderer extends AudioTrackRenderer
     {
         $s = "
         <p>Piste : {$this->audioTrack->titre}</p></br>
-        <p>Album : {$this->audioTrack->album}</p></br>
-        <p>Numéro de piste : {$this->audioTrack->numero}</p></br>
-        <p>Artiste : {$this->audioTrack->artiste}</p></br>
+        <p>Album : {$this->audioTrack->nomAlbum}</p></br>
+        <p>Numéro de piste : {$this->audioTrack->numPiste}</p></br>
+        <p>Artiste : {$this->audioTrack->auteur}</p></br>
         <p>Genre : {$this->audioTrack->genre}</p></br>
         <p>Année : {$this->audioTrack->annee}</p></br>
         <p>Durée : {$this->audioTrack->duree}</p></br>
-        <audio controls><source src=\"{$this->audioTrack->fichier}\" type=\"audio/mpeg\"></audio>";
+        <audio controls><source src=\"files/{$this->audioTrack->nomFichier}\" type=\"audio/mpeg\"></audio>";
         return $s;
     }
 }

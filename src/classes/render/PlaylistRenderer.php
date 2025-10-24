@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace src\classes\render;
 
+use src\classes\audio\lists\Playlist;
+use src\classes\audio\tracks\PodcastTrack;
+
 class PlaylistRenderer extends AudioListRenderer {
 
     public function __construct($playlist) {
@@ -10,7 +13,7 @@ class PlaylistRenderer extends AudioListRenderer {
     }
 
     public function renderLong() : string {
-        $dossier = "src/classes/file_tracks/";
+        $dossier = "files/";
         $affichage ="
         <div class='playlist'>
         <p>Nom : {$this->audioList->name}</p>
@@ -21,15 +24,15 @@ class PlaylistRenderer extends AudioListRenderer {
         <p>Pistes de la playlist : </p>
         <ul>";
         foreach ($this->audioList->pistes as $piste) {
-            $fichier = $dossier.$piste->nomFichier;
-            $pistes .= "<div class='pistes'><ul>
-            <li>Titre : {$piste->titre}</li>
-            <li>Auteur : {$piste->auteur}</li>
-            <li>Genre : {$piste->genre}</li>
-            <li>Annee : {$piste->annee}</li>
-            <li>Duree : {$piste->duree}</li>
-            <audio controls><source src=\"{$fichier}\" type=\"audio/mpeg\"></audio>
-            </ul></div>";
+            if ($piste instanceof PodcastTrack) {
+                $renderer = new PodcastTrackRenderer($piste);
+            } else {
+                $renderer = new AlbumTrackRenderer($piste);
+            }
+            $track = $renderer->render(2);
+            $pistes .= "<div class='pistes'>
+            $track
+            </div>";
         }
         $pistes .= "</ul></div>";
         return $affichage . $pistes;

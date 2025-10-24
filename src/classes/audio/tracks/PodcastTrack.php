@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace src\classes\tracks;
-use src\classes\audio\tracks\AudioTrack;
+namespace src\classes\audio\tracks;
+
 
 class PodcastTrack extends AudioTrack
 {

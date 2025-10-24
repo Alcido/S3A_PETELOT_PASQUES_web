@@ -2,7 +2,8 @@
 declare(strict_types=1);
 
 namespace src\classes\render;
-use TDAppli\deefy\audio\tracks\PodcastTrack;
+
+use src\classes\audio\tracks\PodcastTrack;
 
 class PodcastTrackRenderer extends AudioTrackRenderer
 {
@@ -16,7 +17,7 @@ class PodcastTrackRenderer extends AudioTrackRenderer
         $s = "
         <p>Piste : {$this->audioTrack->titre}</p></br>
         <p>Auteur : {$this->audioTrack->auteur}</p></br>
-        <audio controls><source src=\"{$this->audioTrack->fichier}\" type=\"audio/mpeg\"></audio>";
+        <audio controls><source src=\"files/{$this->audioTrack->nomFichier}\" type=\"audio/mpeg\"></audio>";
         return $s;
     }
 
@@ -28,7 +29,7 @@ class PodcastTrackRenderer extends AudioTrackRenderer
         <p>Genre : {$this->audioTrack->genre}</p></br>
         <p>Année : {$this->audioTrack->annee}</p></br>
         <p>Durée : {$this->audioTrack->duree}</p></br>
-        <audio controls><source src=\"{$this->audioTrack->fichier}\" type=\"audio/mpeg\"></audio>";
+        <audio controls><source src=\"files/{$this->audioTrack->nomFichier}\" type=\"audio/mpeg\"></audio>";
         return $s;
     }
 }

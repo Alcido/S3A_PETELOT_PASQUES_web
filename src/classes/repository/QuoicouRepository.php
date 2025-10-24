@@ -5,7 +5,8 @@ namespace src\classes\repository;
 use src\classes\audio\lists\Playlist;
 use src\classes\audio\tracks\AlbumTrack;
 use src\classes\audio\tracks\AudioTrack;
-use src\classes\tracks\PodcastTrack;
+use src\classes\audio\tracks\PodcastTrack;
+
 
 class QuoicouRepository {
 

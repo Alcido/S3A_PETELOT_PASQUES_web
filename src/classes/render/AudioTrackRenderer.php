@@ -22,13 +22,15 @@ abstract class AudioTrackRenderer implements Renderer
         switch ($selector)
         {
             case Renderer::COMPACT:
-                $this->renderCompact();
+                $res = $this->renderCompact();
                 break;
             case Renderer::LONG:
-                $this->renderLong();
+                $res = $this->renderLong();
                 break;
             default:
+                return "";
                 break;
         }
+        return $res;
     }
 }
