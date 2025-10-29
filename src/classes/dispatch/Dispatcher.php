@@ -90,7 +90,7 @@ class Dispatcher {
                 HTML;
 
         // Si l'utilisateur est connecté
-        if ($this->action !== 'login') {
+        if ($this->action !== 'login' and isset($_SESSION['user'])) {
             // Affichage du menu
             $page .=
                 <<<HTML

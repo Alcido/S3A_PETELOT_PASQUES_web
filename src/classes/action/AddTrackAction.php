@@ -157,11 +157,11 @@ class AddTrackAction extends Action {
      * @return bool si les données sont valides
      */
     public function verifDonnee(string $name, string $author, mixed $date, string $genre, int $duree) : bool {
-        return filter_var($name, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
-            and filter_var($author, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
-            and (filter_var($date, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])
-                or filter_var($date, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']]))
-            and filter_var($genre, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
+        $regexUnicode = '/^[\p{L}0-9 ._\-]+$/u';
+        return filter_var($name, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $regexUnicode]])
+            and filter_var($author, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $regexUnicode]])
+            and filter_var($date, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])
+            and filter_var($genre, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $regexUnicode]])
             and filter_var($duree, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
     }
 
@@ -171,7 +171,7 @@ class AddTrackAction extends Action {
      * @return bool si les données sont valides ou pas
      */
     public function verifDonneeAlbumTrack( string $album, int $numAlbum) : bool {
-        return filter_var($album,FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[a-zA-Z0-9._-]+$/']])
+        return filter_var($album,FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[\p{L}0-9 ._\-]+$/u']])
         and filter_var($numAlbum, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
     }
 

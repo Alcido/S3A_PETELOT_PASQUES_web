@@ -10,13 +10,13 @@ session_start();
 
 QuoicouRepository::setConfig("config/config.db.ini");
 
-if (!isset($_SESSION['user'])) {
+$demandeConn = (isset($_GET['action']) and $_GET['action'] === 'register');
+
+if (!isset($_SESSION['user']) and !$demandeConn) {
     $action = "login";
 } else {
     $action = $_GET['action'] ?? 'default';
 }
-
-
 
 $dispatcher = new Dispatcher($action);
 $dispatcher->run();

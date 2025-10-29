@@ -19,13 +19,19 @@ class LoginAction extends Action {
         $html = <<<HTML
                 <form method="POST" action="?action=login">
                 <fieldset>
-                    <legends>Connexion</legends><br>
+                    <legend>Connexion</legend><br>
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email-user" autofocus required ><br>
                     <label for="mdp">Mot de passe</label>
                     <input type="password" id="mdp" name="mdp-user" required ><br>
                     <button type="submit">Connexion</button>
                 </fieldset>
+                </form>
+
+                <p>Pas de compte ? Créez en un dès maintenant</p>
+                            <form method="GET">
+                <input type="hidden" name="action" value="register">
+                <button type="submit">Créer un compte</button>
                 </form>
                 HTML;
         return $html;

@@ -31,7 +31,7 @@ class AuthnProvider
             throw new AuthnException("Mot de passe incorrect");
         }
         // On ajoute l'utilisateur trouvé en session
-        $value = new User($user['email'], $user['role'], $user['id']);
+        $value = new User($user['email'], intval($user['role']), intval($user['id']));
         $_SESSION['user'] = serialize($value);
     }
 
