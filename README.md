@@ -150,3 +150,5 @@ INSERT INTO `user2playlist` (`id_user`, `id_pl`) VALUES
   </code></pre>
 </div>
 
+<h3>Test de l'application</h3>
+<p>Le test de l'application est assez simple en soit, il suffit de se connecter avec user1@mail.com (mdp user1) d'afficher ses playlist, en selectionner une. Ici soit on ajoute une track soit on se déconnecte puis on se connecte avec user2@mail.com (mdp user2) pour vérifier que la playlist en session est invisible pour l'utilisateur. On peut ensuite créer une playlist vide et ajouter des tracks dedans par exemple. On peut finalement créer un utilisateur (pour le mot de passe uniquement les lettre en minuscules, majuscules et les caractères {_,-, ,.}).</p>
