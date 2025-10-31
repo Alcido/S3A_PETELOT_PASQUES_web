@@ -45,7 +45,6 @@
 
 <p>Voici le script final : </p>
 <div class="container">
-  <button class="copy-btn" onclick="copyCode()">Copier</button>
   <pre><code id="code">
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -151,10 +150,3 @@ INSERT INTO `user2playlist` (`id_user`, `id_pl`) VALUES
   </code></pre>
 </div>
 
-<script>
-function copyCode() {
-  let code = document.getElementById("code").innerText;
-  navigator.clipboard.writeText(code);
-  alert("Code copié !");
-}
-</script>
