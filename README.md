@@ -5,7 +5,7 @@
   <li>PASQUES Germain</li>
 </ul>
 <h3>Fonctionnalités</h3>
-<p>Les fonctionnalités réalisées sont celles demandées par le sujet c'est à dire : </p>
+<p>Les fonctionnalités réalisées sont les suivantes : </p>
 <table>
   <tr>
     <th>Fonctionnalités</th>
@@ -37,13 +37,12 @@
   </tr>
 </table>
 
-<h3>Script de remplissage de la BDD</h3>
-<p>Pour le remplissage de la base de donnée, nous n'avons modifié que 2 choses : </p>
+<h3>Script de remplissage de la BDD :</h3>
+<p>Pour le remplissage de la BDD, nous n'avons modifié que 2 choses : </p>
 <ul><li>Le nom de l'attribut "date_posdcast" en "date_podcast" dans la table track</li>
-<li>Le type de l'attribut daye_podcast dans la table track, initialement de type date il a été passé en entier</li></ul>
-<p>La modification du type est un choix de simplicité qui n'impact pas énormement le sujet en général (nous pensons que la table track aurait pu être scindée en 2 pour faire une table PodcastTrack et une autre AlbumTrack)</p>
+<li>Le type de l'attribut date_podcast dans la table track, initialement de type date, a été passé en entier</li></ul>
+<p>La modification du type est un choix de simplicité qui n'impacte pas la réalisation de l'application</p>
 
-<p>Voici le script final : </p>
 <div class="container">
   <pre><code id="code">
 SET NAMES utf8;
@@ -151,6 +150,11 @@ INSERT INTO `user2playlist` (`id_user`, `id_pl`) VALUES
 </div>
 
 <h3>Test de l'application</h3>
-<p>Le test de l'application est assez simple en soit, il suffit de se connecter avec user1@mail.com (mdp user1) d'afficher ses playlist, en selectionner une. Ici soit on ajoute une track soit on se déconnecte puis on se connecte avec user2@mail.com (mdp user2) pour vérifier que la playlist en session est invisible pour l'utilisateur. On peut ensuite créer une playlist vide et ajouter des tracks dedans par exemple. On peut finalement créer un utilisateur (pour le mot de passe uniquement les lettre en minuscules, majuscules et les caractères {_,-, ,.}).</p>
+<p>Il est possible de créer un compte depuis la page d'accueil, lorsqu'aucun utilisateur n'est connecté à l'aide d'une adresses mail valide (nom@adresse.domaine) et un mot de passe de 10 caractères minimum utilisant uniquement des lettres en minuscules et en majuscules, des espaces et les caractères suivants : - _ .</p>
+<p>Afin de tester l'application, vous pouvez vous connecter avec les identifiants suivants : mail = user1@mail@com, mdp = user1</p>
+<p>Afficher ses playlists à l'aide du menu situé sur le côté gauche et en sélectionner une en cliquant dessus ce qui la met en session</p>
+<p>Ici, on peut choisir d'ajouter soit une AlbumTrack soit une PodcastTrack, se déconnecter ou ajouter un autre utilisateur</p>
+<p>On peut maintenant se déconnecter et se connecter avec les identifiants suivants : mail = user2@mail.com, mdp = user2 et vérifier que la playlist appartenant à user1 n'est pas en visible dans la playlist selectionnée</p>
+<p>On peut aussi ajouter une nouvelle playlist vide et lui ajouter des pistes</p>
 
 
