@@ -142,9 +142,8 @@ class AddTrackAction extends Action {
         $_SESSION["playlist"] = serialize($playlist);
 
         // Affichage
-        $renderer = new PlaylistRenderer($playlist);
-        $affichage = $renderer->render(2);
-        return $affichage . "<a href=\"?action=add-track\">Ajouter encore une piste</a>";
+        header("Location: ?action=pl-current");
+        return"";
 
     }
 
