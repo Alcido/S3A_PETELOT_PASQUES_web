@@ -35,6 +35,10 @@
     <td>Inscription (utilisateur avec rôle standard)/Connexion</td>
     <td>Aucune autorisation particulière</td>
   </tr>
+  <tr>
+    <td>Affichage de toutes les playlists</td>
+    <td>Administrateur authentifié</td>
+  </tr>
 </table>
 
 <h3>Script de remplissage de la BDD :</h3>
@@ -156,5 +160,6 @@ INSERT INTO `user2playlist` (`id_user`, `id_pl`) VALUES
 <p>Ici, on peut choisir d'ajouter soit une AlbumTrack soit une PodcastTrack, se déconnecter ou ajouter un autre utilisateur</p>
 <p>On peut maintenant se déconnecter et se connecter avec les identifiants suivants : mail = user2@mail.com, mdp = user2 et vérifier que la playlist appartenant à user1 n'est pas en visible dans la playlist selectionnée</p>
 <p>On peut aussi ajouter une nouvelle playlist vide et lui ajouter des pistes</p>
+<p>Il est possible de se connecter en tant qu'administrateur à l'aide des identifiants suivants : mail = admin@mail.com, mdp = admin et tester l'affichage de toutes les playlists</p>
 
 
