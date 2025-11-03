@@ -110,6 +110,23 @@ class QuoicouRepository {
         return $res;
     }
 
+    /** Récupérer toutes les playlists
+     * @return array|null tableau de playlists
+     */
+    public function getAllPlaylist() : ?array {
+        // On exécute la requête SQL
+        $query = "select id from playlist";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+
+        // On récupère les playlists via son ID dans la BDD
+        $res = [];
+        while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $res[] = $this->findPlaylistById($row["id"]);
+        }
+        return $res;
+    }
+
     /** Sauvegarder une AudioTrack dans la BDD
      * @param AudioTrack $at track à sauvegarder
      * @return AudioTrack track sauvegardée

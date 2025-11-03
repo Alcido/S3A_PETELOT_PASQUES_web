@@ -62,7 +62,7 @@ class RegisterAction extends Action
 
             // Si l'utilisateur en session n'existe pas
             if (!isset($_SESSION["user"])) {
-                header("Location : ?action=login");
+                header("Location: ?action=login");
             } else {
                 $html = "<p>Utilisateur ajouté avec succès</p>";
             }

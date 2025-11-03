@@ -11,6 +11,9 @@ class User
     private int $role;
     private int $id;
 
+    const ADMIN_USER = 100;
+    const USER = 1;
+
     public function __construct(string $mail, int $role, int $id) {
         $this->email = $mail;
         $this->role = $role;

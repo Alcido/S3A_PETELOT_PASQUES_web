@@ -2,6 +2,7 @@
 
 namespace src\classes\auth;
 
+use src\classes\exception\AccessControlException;
 use src\classes\repository\QuoicouRepository;
 
 /**
@@ -17,5 +18,12 @@ class Authz {
     public static function checkPlaylistOfUser(int $userId, int $playlistId) : bool{
         return QuoicouRepository::getInstance()->isPlaylistOfUser($userId, $playlistId);
     }
+
+    public static function checkRole(int $required): void
+    {
+        if (!unserialize($_SESSION['user'])->role >= $required)
+            throw new AccessControlException("droits insuffisants");
+    }
+
 
 }

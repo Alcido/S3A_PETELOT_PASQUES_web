@@ -2,9 +2,13 @@
 
 namespace src\classes\action;
 
+use src\classes\audio\lists\Playlist;
+use src\classes\auth\Authz;
+use src\classes\exception\AccessControlException;
 use src\classes\exception\AuthnException;
 use src\classes\render\PlaylistRenderer;
 use src\classes\repository\QuoicouRepository;
+use src\classes\user\User;
 
 /**
  * Action permettant de récupérer la playlist de l'utilisateur dans la BDD
@@ -16,8 +20,20 @@ class PlaylistUserAction extends Action {
      */
     public function lancerGet() : string {
         // On récupère l'utilisateur et ses playlists en BDD
-        $user = unserialize($_SESSION['user']);
-        $playlists = QuoicouRepository::getInstance()->getPlaylistByUser($user->id);
+
+        try {
+            $admin = true;
+            Authz::checkRole(User::ADMIN_USER);
+        } catch (AccessControlException $e) {
+            $admin = false;
+        }
+
+        if ($admin) {
+            $playlists = QuoicouRepository::getInstance()->getAllPlaylist();
+        } else {
+            $user = unserialize($_SESSION['user']);
+            $playlists = QuoicouRepository::getInstance()->getPlaylistByUser($user->id);
+        }
 
         // Affichage des playlists
         $html = "<p>Vos playlists : </p><br><ul>";
