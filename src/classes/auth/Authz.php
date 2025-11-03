@@ -19,10 +19,9 @@ class Authz {
         return QuoicouRepository::getInstance()->isPlaylistOfUser($userId, $playlistId);
     }
 
-    public static function checkRole(int $required): void
+    public static function checkRole(int $required): bool
     {
-        if (!unserialize($_SESSION['user'])->role >= $required)
-            throw new AccessControlException("droits insuffisants");
+       return unserialize($_SESSION['user'])->role >= $required;
     }
 
 

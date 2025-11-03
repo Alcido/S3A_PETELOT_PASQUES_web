@@ -21,12 +21,7 @@ class PlaylistUserAction extends Action {
     public function lancerGet() : string {
         // On récupère l'utilisateur et ses playlists en BDD
 
-        try {
-            $admin = true;
-            Authz::checkRole(User::ADMIN_USER);
-        } catch (AccessControlException $e) {
-            $admin = false;
-        }
+        $admin = Authz::checkRole(User::ADMIN_USER);
 
         if ($admin) {
             $playlists = QuoicouRepository::getInstance()->getAllPlaylist();
